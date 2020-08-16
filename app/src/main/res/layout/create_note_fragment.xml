@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.create_note.CreateNoteFragment">
+
+    <TextView
+        android:id="@+id/textViewToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:text="@string/create_note"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editTextNotesTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_edittext"
+        android:gravity="start"
+        android:hint="@string/enter_notes_title"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewToolbar"
+        />
+
+
+    <EditText
+        android:id="@+id/editTextNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_edittext"
+        android:gravity="start"
+        android:hint="@string/enter_note_text"
+        android:lines="10"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNotesTitle" />
+
+
+    <TextView
+        android:id="@+id/textViewChooseDate"
+        android:layout_width="match_parent"
+        android:drawableEnd="@drawable/ic_date"
+        android:background="@drawable/bg_edittext"
+        android:layout_margin="16dp"
+        android:text="Choose date"
+        android:elevation="2dp"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNotes"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/buttonSaveNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_button"
+        android:text="@string/set_reminder"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/notesListFragment">
+
+
+    <fragment
+        android:id="@+id/notesListFragment"
+        android:name="com.reminder.ui.notes_list.NotesListFragment"
+        android:label="task_list_fragment"
+        tools:layout="@layout/task_list_fragment" >
+        <action
+            android:id="@+id/action_notesListFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.reminder.ui.create_note.CreateNoteFragment"
+        android:label="create_note_fragment"
+        tools:layout="@layout/create_note_fragment" />
+</navigation>
