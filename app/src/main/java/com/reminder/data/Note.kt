@@ -9,5 +9,10 @@ class Note(
     @PrimaryKey @ColumnInfo(name = "notes_id") var notesId: String,
     @ColumnInfo(name = "notes_title") var notesTitle: String,
     @ColumnInfo(name = "notes_description") var notesDescription: String,
-    @ColumnInfo(name = "notes_date") var notesDate: String
-):IListItem
+    @ColumnInfo(name = "notes_date") var notesDate: String,
+    @ColumnInfo(name = "is_completed") var isCompleted: Boolean
+):IListItem {
+    override fun getId(): String {
+        return notesId
+    }
+}

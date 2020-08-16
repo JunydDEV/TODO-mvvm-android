@@ -7,6 +7,7 @@ import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.employeeapp.ui.base.BaseFragment
+import com.employeeapp.utils.AppConstants
 import com.reminder.R
 import com.reminder.data.Note
 import kotlinx.android.synthetic.main.create_note_fragment.*
@@ -18,23 +19,53 @@ class CreateNoteFragment : BaseFragment(R.layout.create_note_fragment),
     DatePickerDialog.OnDateSetListener {
     private val viewModel: CreateNoteViewModel by viewModel()
     private var date:String = ""
+    private var updateInfo = false
+    private var note:Note? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         baseViewModel = viewModel
         super.onViewCreated(view, savedInstanceState)
 
-        buttonSaveNote.setOnClickListener {
-            var notes = Note(
-                UUID.randomUUID().toString(),
-                editTextNotesTitle.text.toString(),
-                editTextNotes.text.toString(),
-                date
-            )
-            viewModel.insertNotes(notes).observe(viewLifecycleOwner, androidx.lifecycle.Observer {isInserted->
-                if(isInserted){
-                    finish()
-                }
+        arguments?.let {
+            var notesId = it.getString(AppConstants.KEY_NOTE_ID)
+            viewModel.getNotesInfo(notesId!!).observe(viewLifecycleOwner, androidx.lifecycle.Observer {notes->
+                note = notes
+                editTextNotesTitle.setText(notes.notesTitle)
+                editTextNotes.setText(notes.notesDescription)
+                textViewChooseDate.text =  notes.notesDate
+                date = notes.notesDate
+                updateInfo = true
             })
+        }
+
+        buttonSaveNote.setOnClickListener {
+
+
+            if(!updateInfo) {
+                var notes = Note(
+                    UUID.randomUUID().toString(),
+                    editTextNotesTitle.text.toString(),
+                    editTextNotes.text.toString(),
+                    date,
+                    false
+                )
+
+                viewModel.insertNotes(notes)
+                    .observe(viewLifecycleOwner, androidx.lifecycle.Observer { isInserted ->
+                        if (isInserted) {
+                            finish()
+                        } })
+            }else{
+                var notes = Note(
+                    note?.notesId!!,
+                    editTextNotesTitle.text.toString(),
+                    editTextNotes.text.toString(),
+                    date,
+                    note?.isCompleted!!
+                )
+                viewModel.updateNote(notes)
+                finish()
+            }
         }
 
         textViewChooseDate.setOnClickListener {

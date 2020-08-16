@@ -11,14 +11,14 @@ interface AppDao {
     fun getAllNotes():LiveData<List<Note>>
 
     @Update
-    fun updateEmployee(employee: Note):Int
+    fun updateNotes(notes: Note):Int
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertNotes(employee: Note):Long
+    fun insertNotes(notes: Note):Long
 
     @Delete
-    fun deleteEmployee(employee: Note):Int
+    fun deleteNotes(notes: Note):Int
 
     @Query("SELECT * FROM note WHERE notes_id=:notesId")
-    fun getEmployeeInfo(notesId: String):LiveData<Note>
+    fun getNotesInfo(notesId: String):LiveData<Note>
 }

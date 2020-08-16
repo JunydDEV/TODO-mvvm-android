@@ -1,6 +1,7 @@
 package com.employeeapp.utils
 
 object AppConstants {
+    const val KEY_NOTE_ID: String = "notesId"
     const val KEY_USER_NAME = "userName"
     const val OPERATION_FAILED = -1L
     const val NOT_SELECTED_YET = -1

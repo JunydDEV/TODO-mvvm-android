@@ -42,4 +42,14 @@ class CreateNoteViewModel : BaseViewModel() {
         return resultLiveData
     }
 
+    fun getNotesInfo(notesId: String):LiveData<Note> {
+        return appRepository.getNotesInfo(notesId)
+    }
+
+    fun updateNote(note: Note) {
+        var result = appRepository.updateNote(note)
+        if(result == AppConstants.OPERATION_FAILED){
+            toastMessage.value = "Note Completion failed"
+        }
+    }
 }

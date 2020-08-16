@@ -27,11 +27,11 @@ class AppRepository(var application: Application) {
     }
 
     fun removeEmployee(employee: Note): Long {
-        return appDatabase.notesDao().deleteEmployee(employee).toLong()
+        return appDatabase.notesDao().deleteNotes(employee).toLong()
     }
 
-    fun getEmployeeInfo(userName: String): LiveData<Note> {
-        return appDatabase.notesDao().getEmployeeInfo(userName)
+    fun getNotesInfo(notesInfo: String): LiveData<Note> {
+        return appDatabase.notesDao().getNotesInfo(notesInfo)
     }
 
     fun getTypesList(): MutableList<String> {
@@ -68,7 +68,7 @@ class AppRepository(var application: Application) {
         return rolesList
     }
 
-    fun updateEmployee(employee: Note): Long {
-        return appDatabase.notesDao().updateEmployee(employee).toLong()
+    fun updateNote(note: Note): Long {
+        return appDatabase.notesDao().updateNotes(note).toLong()
     }
 }
