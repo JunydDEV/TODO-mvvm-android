@@ -3,7 +3,7 @@ package com.reminder.ui.create_note
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.reminder.ui.base.BaseViewModel
-import com.employeeapp.utils.AppConstants
+import com.reminder.utils.AppConstants
 import com.reminder.data.Note
 
 class CreateNoteViewModel : BaseViewModel() {

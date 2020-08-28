@@ -71,4 +71,8 @@ class AppRepository(var application: Application) {
     fun updateNote(note: Note): Long {
         return appDatabase.notesDao().updateNotes(note).toLong()
     }
+
+    fun delete(note: Note):Int {
+        return appDatabase.notesDao().deleteNotes(note)
+    }
 }

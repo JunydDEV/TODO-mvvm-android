@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NotesReminder</string>
+    <string name="app_name">Taski</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -15,5 +15,7 @@
     <string name="enter_notes_title">Enter Notes Title</string>
     <string name="enter_note_text">Enter Note Text</string>
     <string name="set_reminder">Set Note</string>
-    <string name="reminders">Reminders</string>
+    <string name="title_task">Tasks</string>
+    <string name="tasks_list_is_empty">Tasks list is empty</string>
+    <string name="create_new_task">Create New Task</string>
 </resources>

@@ -4,10 +4,8 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.employeeapp.ui.base.BaseFragment
-import com.employeeapp.utils.AppConstants
+import com.reminder.utils.AppConstants
 import com.reminder.R
 import com.reminder.data.Note
 import kotlinx.android.synthetic.main.create_note_fragment.*

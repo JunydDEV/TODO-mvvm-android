@@ -3,6 +3,7 @@ package com.reminder.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.reminder.utils.AppConstants
 
 @Entity
 class Note(
@@ -14,5 +15,9 @@ class Note(
 ):IListItem {
     override fun getId(): String {
         return notesId
+    }
+
+    override fun getType(): Int {
+        return AppConstants.TYPE_ITEM_TASK
     }
 }

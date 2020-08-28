@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"
-        android:text="@string/reminders"
+        android:text="@string/title_task"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/recyclerViewReminders"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/reminders"
+        android:text="@string/title_task"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
@@ -43,6 +43,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <include
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        layout="@layout/item_delete"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewToolbar"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
