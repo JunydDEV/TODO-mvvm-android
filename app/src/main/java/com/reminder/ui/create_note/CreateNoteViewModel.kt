@@ -2,19 +2,22 @@ package com.reminder.ui.create_note
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.reminder.data.Note
 import com.reminder.ui.base.BaseViewModel
 import com.reminder.utils.AppConstants
-import com.reminder.data.Note
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CreateNoteViewModel : BaseViewModel() {
+class CreateNoteViewModel @Inject constructor() : BaseViewModel() {
 
-    private fun validateNotes(notes: Note):Boolean{
-        when{
-            notes.notesTitle.isNullOrEmpty()->{
+    private fun validateNotes(notes: Note): Boolean {
+        when {
+            notes.notesTitle.isNullOrEmpty() -> {
                 toastMessage.value = "Please enter notes title"
                 return false
             }
-            notes.notesDescription.isNullOrEmpty()->{
+            notes.notesDescription.isNullOrEmpty() -> {
                 toastMessage.value = "Please enter notes description"
                 return false
             }
@@ -28,14 +31,16 @@ class CreateNoteViewModel : BaseViewModel() {
 
     fun insertNotes(notes: Note):LiveData<Boolean>{
         var resultLiveData = MutableLiveData<Boolean>()
-        if(validateNotes(notes)){
-            var result = appRepository.insertNotes(notes)
-            if(result == AppConstants.OPERATION_FAILED){
-                toastMessage.value = "Notes creation failed."
-                resultLiveData.value = false
-            }else{
-                toastMessage.value = "Notes created successfully."
-                resultLiveData.value = true
+        if(validateNotes(notes)) {
+            viewModelScope.launch {
+                var result = appRepository.insertNotes(notes)
+                if (result == AppConstants.OPERATION_FAILED) {
+                    toastMessage.value = "Notes creation failed."
+                    resultLiveData.value = false
+                } else {
+                    toastMessage.value = "Notes created successfully."
+                    resultLiveData.value = true
+                }
             }
         }
 
@@ -43,13 +48,16 @@ class CreateNoteViewModel : BaseViewModel() {
     }
 
     fun getNotesInfo(notesId: String):LiveData<Note> {
+
         return appRepository.getNotesInfo(notesId)
     }
 
     fun updateNote(note: Note) {
-        var result = appRepository.updateNote(note)
-        if(result == AppConstants.OPERATION_FAILED){
-            toastMessage.value = "Note Completion failed"
+        viewModelScope.launch {
+            var result = appRepository.updateNote(note)
+            if (result == AppConstants.OPERATION_FAILED) {
+                toastMessage.value = "Note Completion failed"
+            }
         }
     }
 }

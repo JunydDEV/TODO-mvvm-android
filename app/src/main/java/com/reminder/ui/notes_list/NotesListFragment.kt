@@ -5,32 +5,37 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.employeeapp.ui.base.BaseFragment
-import com.reminder.utils.AppConstants
 import com.reminder.R
 import com.reminder.data.Empty
 import com.reminder.data.IListItem
 import com.reminder.data.Note
+import com.reminder.di.DaggerAppComponents
+import com.reminder.utils.AppConstants
 import kotlinx.android.synthetic.main.item_delete.*
 import kotlinx.android.synthetic.main.task_list_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class NotesListFragment : BaseFragment(R.layout.task_list_fragment) {
 
-    private val viewModel:NotesListViewModel by viewModel()
-    private var adapter:NotesAdapter? = null
+    @Inject
+    lateinit var viewModel: NotesListViewModel
+
+    private var adapter: NotesAdapter? = null
     private var notesList = mutableListOf<IListItem>()
-    private var note:Note? = null
+    private var note: Note? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        DaggerAppComponents.create().inject(this)
+
         baseViewModel = viewModel
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.fetchAllNotes().observe(viewLifecycleOwner, Observer {
             notesList.clear()
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 notesList.addAll(it)
                 fab.visibility = View.VISIBLE
-            }else{
+            } else {
                 notesList.add(Empty())
                 fab.visibility = View.GONE
             }

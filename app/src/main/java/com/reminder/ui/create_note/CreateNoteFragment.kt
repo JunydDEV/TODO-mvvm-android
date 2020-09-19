@@ -5,31 +5,39 @@ import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
 import com.employeeapp.ui.base.BaseFragment
-import com.reminder.utils.AppConstants
 import com.reminder.R
 import com.reminder.data.Note
+import com.reminder.di.DaggerAppComponents
+import com.reminder.utils.AppConstants
 import kotlinx.android.synthetic.main.create_note_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
+import javax.inject.Inject
 
 
 class CreateNoteFragment : BaseFragment(R.layout.create_note_fragment),
     DatePickerDialog.OnDateSetListener {
-    private val viewModel: CreateNoteViewModel by viewModel()
-    private var date:String = ""
+
+    @Inject
+    lateinit var viewModel: CreateNoteViewModel
+
+    private var date: String = ""
     private var updateInfo = false
-    private var note:Note? = null
+    private var note: Note? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        DaggerAppComponents.create().inject(this)
+
         baseViewModel = viewModel
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             var notesId = it.getString(AppConstants.KEY_NOTE_ID)
-            viewModel.getNotesInfo(notesId!!).observe(viewLifecycleOwner, androidx.lifecycle.Observer {notes->
-                note = notes
-                editTextNotesTitle.setText(notes.notesTitle)
-                editTextNotes.setText(notes.notesDescription)
+            viewModel.getNotesInfo(notesId!!)
+                .observe(viewLifecycleOwner, androidx.lifecycle.Observer { notes ->
+                    note = notes
+                    editTextNotesTitle.setText(notes.notesTitle)
+                    editTextNotes.setText(notes.notesDescription)
                 textViewChooseDate.text =  notes.notesDate
                 date = notes.notesDate
                 updateInfo = true

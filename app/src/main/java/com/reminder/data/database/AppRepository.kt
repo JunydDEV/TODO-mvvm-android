@@ -1,24 +1,25 @@
 package com.employeeapp.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.room.Room
+import com.reminder.MyApplication
 import com.reminder.data.IListItem
 import com.reminder.data.Note
-import java.lang.Exception
+import com.reminder.utils.AppConstants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AppRepository(var application: Application) {
+class AppRepository @Inject constructor(application: MyApplication) {
 
-    private var appDatabase: AppDatabase = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "notes-db"
-    ).allowMainThreadQueries().build()
+    private var appDatabase = AppDatabase.getDatabase(application)
 
-    fun insertNotes(note: Note): Long {
+    suspend fun insertNotes(note: Note): Long {
         return try {
-            appDatabase.notesDao().insertNotes(note)
-        }catch (e:Exception){
-            -1
+            withContext(Dispatchers.IO) {
+                appDatabase.notesDao().insertNotes(note)
+            }
+        } catch (e: Exception) {
+            AppConstants.OPERATION_FAILED
         }
     }
 
@@ -34,45 +35,20 @@ class AppRepository(var application: Application) {
         return appDatabase.notesDao().getNotesInfo(notesInfo)
     }
 
-    fun getTypesList(): MutableList<String> {
-        var typesList = mutableListOf<String>()
-
-        typesList.add("--No Selected--")
-        typesList.add("Accounting")
-        typesList.add("Sales")
-        typesList.add("Plant")
-        typesList.add("Shipping")
-        typesList.add("Quality Control")
-
-        return typesList
+    suspend fun updateNote(note: Note): Long? {
+        var result: Long?
+        withContext(Dispatchers.IO) {
+            result = appDatabase.notesDao().updateNotes(note).toLong()
+        }
+        return result
     }
 
-    fun getRolesList(): MutableList<String> {
-        var rolesList = mutableListOf<String>()
+    suspend fun delete(note: Note): Int? {
+        var result: Int?
+        withContext(Dispatchers.IO) {
+            result = appDatabase.notesDao().deleteNotes(note)
+        }
 
-        rolesList.add("ADMIN")
-        rolesList.add("ACCT_PAY")
-        rolesList.add("ACCT_RCV")
-        rolesList.add("EMP_BENEFITS")
-        rolesList.add("GEN_LEDGER")
-        rolesList.add("PAYROLL")
-        rolesList.add("INVENTORY")
-        rolesList.add("PRODUCTION")
-        rolesList.add("QUALITY_CTR")
-        rolesList.add("SALES")
-        rolesList.add("ORDERS")
-        rolesList.add("CUSTOMERS")
-        rolesList.add("SHIPPING")
-        rolesList.add("RETURN")
-
-        return rolesList
-    }
-
-    fun updateNote(note: Note): Long {
-        return appDatabase.notesDao().updateNotes(note).toLong()
-    }
-
-    fun delete(note: Note):Int {
-        return appDatabase.notesDao().deleteNotes(note)
+        return result
     }
 }
