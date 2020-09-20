@@ -13,6 +13,8 @@ import com.reminder.di.DaggerAppComponents
 import com.reminder.utils.AppConstants
 import kotlinx.android.synthetic.main.item_delete.*
 import kotlinx.android.synthetic.main.task_list_fragment.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NotesListFragment : BaseFragment(R.layout.task_list_fragment) {
@@ -39,7 +41,10 @@ class NotesListFragment : BaseFragment(R.layout.task_list_fragment) {
                 notesList.add(Empty())
                 fab.visibility = View.GONE
             }
-            adapter?.notifyDataSetChanged()
+
+            MainScope().launch {
+                adapter?.notifyDataSetChanged()
+            }
         })
 
         setNotesList()

@@ -5,19 +5,17 @@ import com.reminder.MyApplication
 import com.reminder.data.IListItem
 import com.reminder.data.Note
 import com.reminder.utils.AppConstants
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class AppRepository @Inject constructor(application: MyApplication) {
 
     private var appDatabase = AppDatabase.getDatabase(application)
+    lateinit var dispatch: CoroutineDispatcher
 
-    suspend fun insertNotes(note: Note): Long {
+    fun insertNotes(note: Note): Long {
         return try {
-            withContext(Dispatchers.IO) {
-                appDatabase.notesDao().insertNotes(note)
-            }
+            appDatabase.notesDao().insertNotes(note)
         } catch (e: Exception) {
             AppConstants.OPERATION_FAILED
         }
@@ -35,20 +33,11 @@ class AppRepository @Inject constructor(application: MyApplication) {
         return appDatabase.notesDao().getNotesInfo(notesInfo)
     }
 
-    suspend fun updateNote(note: Note): Long? {
-        var result: Long?
-        withContext(Dispatchers.IO) {
-            result = appDatabase.notesDao().updateNotes(note).toLong()
-        }
-        return result
+    fun updateNote(note: Note): Long? {
+        return appDatabase.notesDao().updateNotes(note).toLong()
     }
 
-    suspend fun delete(note: Note): Int? {
-        var result: Int?
-        withContext(Dispatchers.IO) {
-            result = appDatabase.notesDao().deleteNotes(note)
-        }
-
-        return result
+    fun delete(note: Note): Int? {
+        return appDatabase.notesDao().deleteNotes(note)
     }
 }
